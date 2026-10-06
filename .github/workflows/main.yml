@@ -22,6 +22,17 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Fix Gradle Wrapper
+        run: |
+          echo "=== Current Gradle Wrapper ==="
+          cat android/gradle/wrapper/gradle-wrapper.properties
+
+          echo "=== Fixing Gradle URL ==="
+          sed -i 's#https://github.com/gradle/gradle-distributions/releases/download/v8.14.0/gradle-8.14.0-all.zip#https://services.gradle.org/distributions/gradle-8.14.0-all.zip#g' android/gradle/wrapper/gradle-wrapper.properties
+
+          echo "=== Gradle Wrapper After Fix ==="
+          cat android/gradle/wrapper/gradle-wrapper.properties
+
       - name: Build APK
         run: flutter build apk --release
 
